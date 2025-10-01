@@ -1,0 +1,17 @@
+@extends('layouts.app')
+@section('title', 'Edit Menu')
+@section('header', 'Edit Menu: ' . $menuItem->name)
+
+@section('content')
+<div class="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
+    <form action="{{ route('tenant.menu-items.update', $menuItem) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        @include('tenant.menu_items._form', ['menuItem' => $menuItem])
+        <div class="flex justify-end space-x-4 mt-8 pt-4 border-t border-gray-300">
+            <a href="{{ route('tenant.menu-items.index') }}" class="px-6 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Batal</a>
+            <button type="submit" class="px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">Perbarui</button>
+        </div>
+    </form>
+</div>
+@endsection

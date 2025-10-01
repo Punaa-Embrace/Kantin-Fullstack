@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+/* These @source rules tell Tailwind where to scan for class names */
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/*
+  This is where you define your custom theme variables for Tailwind CSS v4.
+*/
+@theme {
+    /* 1. Set the default font to Poppins */
+    --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-green-100: #f0f7e9;
+    --color-green-500: #4a8804;
+    --color-green-600: #396C03;
+    --color-green-700: #2d5102;
+
+    --color-yellow-500: #F8B602;
+
+    --color-lemon: #70D035;
+    --color-lemon-100: #6B9142;
+    --color-lemon-200: #5A7B3C;
+}
+
+/* For hiding scrollbars */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
