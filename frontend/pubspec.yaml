@@ -1,4 +1,4 @@
-name: Kantin
+name: kantin
 description: Aplikasi Mobile Kantin Polibatam.
 
 publish_to: 'none'
@@ -27,6 +27,8 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/
+    - assets/store/
     - assets/logo.png
 
   fonts:
