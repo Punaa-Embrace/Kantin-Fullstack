@@ -12,12 +12,17 @@ class _CategoryListState extends State<CategoryList> {
   int selectedIndex = 0;
 
   final categories = [
-    {'icon': '🍜', 'name': 'Semua'},
-    {'icon': '🥣', 'name': 'Sup'},
-    {'icon': '🍝', 'name': 'Mie'},
-    {'icon': '🐟', 'name': 'Ikan'},
+    {'image': 'assets/category/all.png', 'name': 'Semua'},
+    {'image': 'assets/category/sup.png', 'name': 'Sup'},
+    {'image': 'assets/category/mie.png', 'name': 'Mie'},
+    {'image': 'assets/category/ikan.png', 'name': 'Ikan'},
+    {'image': 'assets/category/cemilan.png', 'name': 'Cemilan'},
+    {'image': 'assets/category/roti.png', 'name': 'Roti'},
+    {'image': 'assets/category/burger.png', 'name': 'Burger'},
+    {'image': 'assets/category/minuman.png', 'name': 'Minuman'},
+    {'image': 'assets/category/ayam.png', 'name': 'Nasi ayam'},
   ];
-
+  
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -28,7 +33,7 @@ class _CategoryListState extends State<CategoryList> {
         itemCount: categories.length,
         itemBuilder: (context, index) {
           return CategoryItem(
-            icon: categories[index]['icon']!,
+            imagePath: categories[index]['image']!,
             name: categories[index]['name']!,
             isSelected: selectedIndex == index,
             onTap: () {
@@ -44,14 +49,14 @@ class _CategoryListState extends State<CategoryList> {
 }
 
 class CategoryItem extends StatelessWidget {
-  final String icon;
+  final String imagePath;
   final String name;
   final bool isSelected;
   final VoidCallback onTap;
 
   const CategoryItem({
     Key? key,
-    required this.icon,
+    required this.imagePath,
     required this.name,
     required this.isSelected,
     required this.onTap,
@@ -62,12 +67,12 @@ class CategoryItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.only(right: 12), 
+        margin: const EdgeInsets.only(right: 12),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: const EdgeInsets.all(15), 
+              padding: const EdgeInsets.all(12),
               constraints: const BoxConstraints(
                 minWidth: 70,
                 minHeight: 70,
@@ -80,17 +85,18 @@ class CategoryItem extends StatelessWidget {
                   width: 1.5,
                 ),
               ),
-              child: Text(
-                icon,
-                style: const TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
+              child: Image.asset(
+                imagePath,
+                width: 32,
+                height: 32,
+                fit: BoxFit.contain,
               ),
             ),
-            const SizedBox(height: 4), 
+            const SizedBox(height: 4),
             Text(
               name,
               style: TextStyle(
-                fontSize: 11, 
+                fontSize: 11,
                 color: isSelected ? AppTheme.primaryColor : AppTheme.textColor,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               ),

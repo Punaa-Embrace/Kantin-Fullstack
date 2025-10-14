@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/product_card.dart';
+import '../student/order/category_list.dart';
 import '../student/store_page.dart';
 import '../student/order_page.dart';
 import '../student/cart_page.dart';
@@ -90,28 +91,48 @@ class HomeContent extends StatelessWidget {
 
             // Banner
             Container(
+              width: double.infinity,
+              height: 140,
               margin: const EdgeInsets.symmetric(horizontal: 16),
-              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.amber,
+                color: const Color(0xFFFFC107),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Mager ke Kantin?',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+              child: Stack(
+                children: [
+                  Positioned(
+                    right: 0,
+                    bottom: 0,
+                    child: Image.asset(
+                      'assets/orang.png',
+                      height: 130,
+                      fit: BoxFit.contain,
                     ),
                   ),
-                  Text(
-                    'Pesan Di Jaka Aja',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Mager Ke Kantin?',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'Pesan Di JakaAja',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -125,15 +146,7 @@ class HomeContent extends StatelessWidget {
                 children: [
                   _buildSectionHeader('Kategori'),
                   const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: const [
-                      _CategoryItem(icon: '🥖', label: 'Roti'),
-                      _CategoryItem(icon: '🍔', label: 'Burger'),
-                      _CategoryItem(icon: '🥤', label: 'Minuman'),
-                      _CategoryItem(icon: '🍗', label: 'Ayam'),
-                    ],
-                  ),
+                  const CategoryList(), // Replace the Row of _CategoryItem with CategoryList
                 ],
               ),
             ),
@@ -190,38 +203,6 @@ class HomeContent extends StatelessWidget {
             style: TextStyle(color: Colors.amber),
           ),
         ),
-      ],
-    );
-  }
-}
-
-class _CategoryItem extends StatelessWidget {
-  final String icon;
-  final String label;
-
-  const _CategoryItem({
-    Key? key,
-    required this.icon,
-    required this.label,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            shape: BoxShape.circle,
-          ),
-          child: Text(
-            icon,
-            style: const TextStyle(fontSize: 24),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(label),
       ],
     );
   }

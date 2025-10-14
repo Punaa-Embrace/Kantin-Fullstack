@@ -22,6 +22,8 @@ flutter_icons:
   android: true
   ios: true
   image_path: "assets/logo.png"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/logo.png"
 
 flutter:
   uses-material-design: true
@@ -29,6 +31,8 @@ flutter:
   assets:
     - assets/images/
     - assets/store/
+    - assets/category/
+    - assets/orang.png
     - assets/logo.png
 
   fonts:
