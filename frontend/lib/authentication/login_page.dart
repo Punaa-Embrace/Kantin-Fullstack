@@ -216,6 +216,9 @@ class _LoginPageState extends State<LoginPage> {
     // Logic untuk login
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
+    
+    // Langsung navigasi ke dashboard tanpa validasi
+    Navigator.of(context).pushReplacementNamed('/dashboard');
 
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
