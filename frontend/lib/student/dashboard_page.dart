@@ -4,9 +4,10 @@ import '../student/order/category_list.dart';
 import '../student/store_page.dart';
 import '../student/order_page.dart';
 import '../student/cart_page.dart';
+import '../student/profile_page.dart';
 
 
-class HomeScreen extends StatefulWidget {
+class  HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -16,10 +17,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   final List<Widget> _pages = [
-    const HomeContent(),
+    const HomeContent(), 
     const StorePage(),
     const OrderPage(),
     const CartPage(),
+    const ProfilePage(),
+
   ];
 
   @override

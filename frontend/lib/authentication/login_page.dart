@@ -15,76 +15,199 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  bool _isLoading = false;
+
+  // Validasi dummy untuk menentukan user type
+  String _getUserType(String email) {
+    if (email.contains('@tenant.') || email.endsWith('@tenant.com')) {
+      return 'tenant';
+    } else if (email.contains('@student.') || email.endsWith('@student.com')) {
+      return 'student';
+    } else {
+      // Default ke student jika tidak ada pattern khusus
+      return 'student';
+    }
+  }
+
+  void _login() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Harap isi email dan password'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    // Show loading
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      // Simulasi proses login (delay 2 detik)
+      await Future.delayed(const Duration(seconds: 2));
+
+      // Tentukan user type berdasarkan email
+      final userType = _getUserType(email);
+
+      // Validasi dummy credentials
+      if (_validateCredentials(email, password)) {
+        // Login berhasil - navigasi berdasarkan user type
+        if (userType == 'tenant') {
+          // Cek dulu apakah route tersedia
+          Navigator.of(context).pushReplacementNamed('/tenant_dashboard');
+        } else {
+          Navigator.of(context).pushReplacementNamed('/dashboard');
+        }
+        
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Login berhasil sebagai $userType'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      } else {
+        // Login gagal
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Email atau password salah'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      // Handle error navigasi
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  // Validasi dummy credentials
+  bool _validateCredentials(String email, String password) {
+    // Credentials untuk testing
+    final validCredentials = {
+      'puna@student.com': 'puna123',
+      'alca@tenant.com': 'alca123',
+      'user@student.com': 'password123',
+      'tenant@tenant.com': 'password123',
+      'test@student.com': 'test123',
+      'test@tenant.com': 'test123',
+    };
+
+    return validCredentials[email] == password;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 40),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(24.0),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                child: IntrinsicHeight(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Logo dengan jarak yang lebih kecil
+                      Center(
+                        child: Image.asset(
+                          'assets/logo.png',
+                          width: 120, // Diperkecil
+                          height: 120, // Diperkecil
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              width: 120,
+                              height: 120,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: const Icon(
+                                Icons.restaurant,
+                                size: 40, // Diperkecil
+                                color: Colors.grey,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 30),
 
-              // Logo/Judul
-              Center(
-                child: Image.asset(
-                  'assets/logo.png',
-                  width: 180,
-                  height: 180,
-                  fit: BoxFit.contain,
+                      // Judul Masuk
+                      Text(
+                        'Masuk',
+                        style: AppTheme.headingStyle.copyWith(
+                          fontSize: 28,
+                        ),
+                      ),
+
+                      const SizedBox(height: 8),
+
+                      // Subtitle
+                      Text(
+                        'Silakan masuk untuk melanjutkan',
+                        style: AppTheme.bodyStyle,
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      // Form Input
+                      _buildEmailField(),
+
+                      const SizedBox(height: 16),
+
+                      _buildPasswordField(),
+
+                      const SizedBox(height: 20),
+
+                      // Tombol Masuk
+                      _isLoading
+                          ? const Center(child: CircularProgressIndicator())
+                          : CustomButton(
+                              text: 'Masuk',
+                              onPressed: _login,
+                            ),
+
+                      const SizedBox(height: 20),
+
+                      // Divider atau separator
+                      _buildDivider(),
+
+                      const SizedBox(height: 20),
+
+                      // Link Daftar
+                      _buildRegisterSection(),
+
+                      // Spacer dihapus, diganti dengan SizedBox flexible
+                      const SizedBox(height: 20),
+                    ],
+                  ),
                 ),
               ),
-              const SizedBox(height: 60),
-
-              // Judul Masuk
-              Text(
-                'Masuk',
-                style: AppTheme.headingStyle.copyWith(
-                  fontSize: 28,
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-              // Subtitle
-              Text(
-                'Silakan masuk untuk melanjutkan',
-                style: AppTheme.bodyStyle,
-              ),
-
-              const SizedBox(height: 32),
-
-              // Form Input
-              _buildEmailField(),
-
-              const SizedBox(height: 16),
-
-              _buildPasswordField(),
-
-              const SizedBox(height: 24),
-
-              // Tombol Masuk
-              CustomButton(
-                text: 'Masuk',
-                onPressed: _login,
-              ),
-
-              const SizedBox(height: 24),
-
-              // Divider atau separator
-              _buildDivider(),
-
-              const SizedBox(height: 24),
-
-              // Link Daftar
-              _buildRegisterSection(),
-
-              const Spacer(),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
@@ -95,7 +218,7 @@ class _LoginPageState extends State<LoginPage> {
       controller: _emailController,
       decoration: InputDecoration(
         labelText: 'Email',
-        hintText: 'Masukkan email Anda',
+        hintText: 'Masukan email Anda',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: AppTheme.secondaryColor),
@@ -184,53 +307,32 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildRegisterSection() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Text(
-        'Belum punya akun?',
-        style: AppTheme.bodyStyle,
-        softWrap: true,
-        overflow: TextOverflow.visible,
-      ),
-      const SizedBox(width: 8),
-      GestureDetector(
-        onTap: _goToRegister,
-        child: Text(
-          'Daftar di sini',
-          style: AppTheme.linkStyle.copyWith(
-            color: Colors.green,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          'Belum punya akun?',
+          style: AppTheme.bodyStyle,
           softWrap: true,
           overflow: TextOverflow.visible,
         ),
-      ),
-    ],
-  );
-}
-
-  void _login() {
-    // Logic untuk login
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-    
-    // Langsung navigasi ke dashboard tanpa validasi
-    Navigator.of(context).pushReplacementNamed('/dashboard');
-
-    if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Harap isi email dan password'),
+        const SizedBox(width: 8),
+        GestureDetector(
+          onTap: _goToRegister,
+          child: Text(
+            'Daftar di sini',
+            style: AppTheme.linkStyle.copyWith(
+              color: Colors.green,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+            softWrap: true,
+            overflow: TextOverflow.visible,
+          ),
         ),
-      );
-      return;
-    }
-
-    // Implementasi login logic di sini
-    print('Login attempt: $email');
+      ],
+    );
   }
 
   void _goToRegister() {

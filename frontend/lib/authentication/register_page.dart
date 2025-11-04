@@ -35,22 +35,22 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(12.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
+                const SizedBox(height: 0),
 
               Center(
                 child: Image.asset(
                   'assets/logo.png',
-                  width: 180,
-                  height: 180,
+                  width: 160,
+                  height: 150,
                   fit: BoxFit.contain,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
 
                 // Judul
                 Text(

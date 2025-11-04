@@ -5,7 +5,7 @@ import 'authentication/forgot_password_page.dart';
 import 'authentication/otp_verification_page.dart';
 import 'authentication/reset_password_page.dart';
 import 'student/dashboard_page.dart';
-
+import 'tenant/tenant_dashboard.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -41,8 +41,11 @@ class MyApp extends StatelessWidget {
             const OTPVerificationPage(phoneNumber: ''),
         '/reset-password': (context) =>
             const ResetPasswordPage(phoneNumber: ''),
+        // Student Routes
         '/dashboard': (context) => const HomeScreen(),
-      },
+        // Tenant Routes
+        '/tenant_dashboard': (context) => const TenantDashboardPage(),
+        },
       debugShowCheckedModeBanner: false,
     );
   }

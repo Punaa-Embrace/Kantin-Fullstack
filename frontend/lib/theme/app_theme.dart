@@ -11,11 +11,15 @@ class AppTheme {
   static const Color surfaceColor = Colors.white;
 
   // Text Colors
-  static const Color textColor = Color(0xFF1E293B);
+  static const Color textColor = Color.fromARGB(255, 3, 4, 6);
   static const Color textColorLight = Colors.white;
 
   // Status Colors
   static Color shadowColor = Colors.grey.withOpacity(0.1);
+  static const Color successColor = Color(0xFF3C7E01);
+  static const Color warningColor = Color(0xFFFFA000);
+  static const Color errorColor = Color(0xFFD32F2F);
+  static const Color infoColor = Color(0xFF1976D2);
 
   static TextStyle headingStyle = const TextStyle(
     fontSize: 32,

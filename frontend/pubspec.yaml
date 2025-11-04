@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  image_picker: ^1.0.4
 
 dev_dependencies:
   flutter_test:
@@ -18,12 +19,12 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_launcher_icons: ^0.13.1
 
-flutter_icons:
+flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/logo.png"
-  adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/logo.png"
+  image_path: "assets/icon.png"
+  min_sdk_android: 21
+
 
 flutter:
   uses-material-design: true
@@ -34,6 +35,7 @@ flutter:
     - assets/category/
     - assets/orang.png
     - assets/logo.png
+    - assets/icon.png
 
   fonts:
     - family: Inter
